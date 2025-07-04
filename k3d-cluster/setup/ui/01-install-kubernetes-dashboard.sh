@@ -77,8 +77,26 @@ subjects:
 EOF
 
 echo -e "\n🔑 Token de acesso (válido por tempo limitado):"
-kubectl -n "$NAMESPACE" create token admin-user
+TOKEN=$(kubectl -n "$NAMESPACE" create token admin-user 2>/dev/null || true)
 
+if [[ -z "$TOKEN" ]]; then
+  echo "⚠️ 'kubectl create token' não disponível. Criando token manualmente..."
+
+  cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Secret
+metadata:
+  name: admin-user-token
+  namespace: $NAMESPACE
+  annotations:
+    kubernetes.io/service-account.name: admin-user
+type: kubernetes.io/service-account-token
+EOF
+  sleep 2
+  TOKEN=$(kubectl -n "$NAMESPACE" get secret admin-user-token -o jsonpath="{.data.token}" | base64 -d)
+fi
+
+echo -e "\n🔑 Token de acesso:\n$TOKEN"
 
 echo "✅ Kubernetes Dashboard instalado com sucesso!"
 echo ""

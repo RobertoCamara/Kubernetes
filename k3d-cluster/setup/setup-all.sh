@@ -9,9 +9,11 @@ echo "🚀 Iniciando setup completo..."
 
 ./01-create-cluster.sh
 
-./kafka/00-install-kafka.sh
+./kong/install-full-kong.sh
 
-./ui/setup-ui.sh
+#./kafka/00-install-kafka.sh
+
+#./ui/setup-ui.sh
 
 echo ""
 echo "🎉 Setup completo executado com sucesso!"

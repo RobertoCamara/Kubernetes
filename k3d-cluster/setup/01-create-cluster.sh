@@ -1,12 +1,20 @@
 #!/bin/bash
 set -e
 
-read -p "❓ Deseja criar/recriar o cluster k3d? (s/N): " CONFIRM
+# 🔧 Configurações
+CLUSTER_NAME="kubelocal"
+K3S_IMAGE="rancher/k3s:v1.33.2-k3s1"
+
+# 🔎 Verificação de dependência
+if ! command -v k3d &>/dev/null; then
+  echo "❌ k3d não encontrado. Instale-o primeiro: https://k3d.io/"
+  exit 1
+fi
+
+read -p "❓ Deseja criar/recriar o cluster k3d '$CLUSTER_NAME'? (s/N): " CONFIRM
 
 if [[ "$CONFIRM" =~ ^[Ss]$ ]]; then
   echo "🚀 Iniciando criação do cluster..."
-
-  CLUSTER_NAME="kubelocal-cluster"
 
   echo "🧹 Deletando cluster antigo (se existir)..."
   k3d cluster delete $CLUSTER_NAME || true
@@ -26,9 +34,10 @@ if [[ "$CONFIRM" =~ ^[Ss]$ ]]; then
     -p "9021:30021@loadbalancer" \
     -p "80:80@loadbalancer" \
     -p "443:443@loadbalancer" \
+    --image $K3S_IMAGE \
     --agents 1
 
-  echo "✅ Cluster criado com sucesso!"
+  echo "✅ Cluster '$CLUSTER_NAME' criado com sucesso!"
 else
   echo "🚫 Criação do cluster cancelada pelo usuário."
 fi

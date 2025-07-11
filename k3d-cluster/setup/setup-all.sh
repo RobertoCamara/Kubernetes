@@ -11,9 +11,9 @@ echo "🚀 Iniciando setup completo..."
 
 ./kong/install-full-kong.sh
 
-#./kafka/00-install-kafka.sh
+./kafka/00-install-kafka.sh
 
-#./ui/setup-ui.sh
+./ui/setup-ui.sh
 
 echo ""
 echo "🎉 Setup completo executado com sucesso!"

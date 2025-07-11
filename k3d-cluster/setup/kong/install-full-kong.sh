@@ -5,7 +5,7 @@ set -e
 NAMESPACE="kong"
 RELEASE_NAME="kong"
 KONG_VERSION="2.50.0"
-TMP_DIR="./.tmp-kong"
+TMP_DIR="./${SCRIPT_DIR}/kong/.tmp-kong"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VALUES_FILE="${SCRIPT_DIR}/values-kong.yaml"
 KONGA_FILE="${SCRIPT_DIR}/konga.yaml"

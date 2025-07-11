@@ -1,0 +1,30 @@
+FROM confluentinc/cp-kafka-connect:7.2.15
+
+ENV CONNECT_PLUGIN_PATH="/usr/share/java,/usr/share/confluent-hub-components,/usr/share/confluent-hub-components/*"
+
+# Debezium PostgreSQL
+RUN curl -L -o /tmp/debezium-postgres.tar.gz https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/2.5.0.Final/debezium-connector-postgres-2.5.0.Final-plugin.tar.gz \
+  && mkdir -p /usr/share/confluent-hub-components/debezium-postgres \
+  && tar -xzf /tmp/debezium-postgres.tar.gz -C /usr/share/confluent-hub-components/debezium-postgres --strip-components=1 \
+  && rm /tmp/debezium-postgres.tar.gz
+
+# Debezium MySQL
+RUN curl -L -o /tmp/debezium-mysql.tar.gz https://repo1.maven.org/maven2/io/debezium/debezium-connector-mysql/2.5.0.Final/debezium-connector-mysql-2.5.0.Final-plugin.tar.gz \
+  && mkdir -p /usr/share/confluent-hub-components/debezium-mysql \
+  && tar -xzf /tmp/debezium-mysql.tar.gz -C /usr/share/confluent-hub-components/debezium-mysql --strip-components=1 \
+  && rm /tmp/debezium-mysql.tar.gz
+
+# Debezium MongoDB (CDC Source)
+RUN curl -L -o /tmp/debezium-mongo.tar.gz https://repo1.maven.org/maven2/io/debezium/debezium-connector-mongodb/2.5.0.Final/debezium-connector-mongodb-2.5.0.Final-plugin.tar.gz \
+  && mkdir -p /usr/share/confluent-hub-components/debezium-mongodb \
+  && tar -xzf /tmp/debezium-mongo.tar.gz -C /usr/share/confluent-hub-components/debezium-mongodb --strip-components=1 \
+  && rm /tmp/debezium-mongo.tar.gz
+
+# Redis Sink
+RUN confluent-hub install --no-prompt jcustenborder/kafka-connect-redis:latest
+
+# Elasticsearch Sink Connector
+RUN confluent-hub install --no-prompt confluentinc/kafka-connect-elasticsearch:15.0.0
+
+# S3 Sink Connector
+RUN confluent-hub install --no-prompt confluentinc/kafka-connect-s3:10.6.7

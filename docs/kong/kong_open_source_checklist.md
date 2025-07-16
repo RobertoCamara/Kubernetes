@@ -1,4 +1,4 @@
-# ✅ Checklist Técnico: Adoção do Kong Open Source em Ambiente Corporativo
+# ✅ Checklist Técnico: Adoção do Kong Open Source em Suas Aplicações
 
 ## Segurança e Autenticação
 

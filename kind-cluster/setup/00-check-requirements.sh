@@ -16,9 +16,9 @@ fi
 # Install kind if not present
 if ! command -v kind &> /dev/null; then
   echo "📥 Installing kind..."
-  curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.22.0/kind-linux-amd64
-  chmod +x ./kind
-  sudo mv ./kind /usr/local/bin/kind
+  curl -Lo /tmp/kind https://kind.sigs.k8s.io/dl/v0.22.0/kind-linux-amd64
+  chmod +x /tmp/kind
+  sudo mv /tmp/kind /usr/local/bin/kind
 else
   echo "✅ kind is already installed."
 fi

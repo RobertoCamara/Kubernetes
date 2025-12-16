@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-CLUSTER_NAME="kubelocal-cluster"
+CLUSTER_NAME="kubelocal"
 IMAGE_NAME="kafka-connect-custom:local"
 
 # Caminho absoluto da pasta onde este script está

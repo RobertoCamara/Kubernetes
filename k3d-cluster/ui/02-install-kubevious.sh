@@ -7,33 +7,33 @@ SERVICE_NAME="kubevious-ui-clusterip"
 NODE_PORT=30082
 LOCAL_PORT=8082
 
-echo "📂 Verificando se o namespace '$NAMESPACE' existe..."
+echo "📂 Checking if namespace '$NAMESPACE' exists..."
 if ! kubectl get namespace "$NAMESPACE" &> /dev/null; then
-  echo "📦 Criando namespace '$NAMESPACE'..."
+  echo "📦 Creating namespace '$NAMESPACE'..."
   kubectl create namespace "$NAMESPACE"
 else
-  echo "✅ Namespace '$NAMESPACE' já existe."
+  echo "✅ Namespace '$NAMESPACE' already exists."
 fi
 
-echo "📦 Adicionando repositório do Kubevious (se necessário)..."
+echo "📦 Adding Kubevious Helm repository (if needed)..."
 helm repo add kubevious https://helm.kubevious.io || true
 helm repo update
 
-echo "🔍 Verificando se o release '$RELEASE_NAME' já está instalado..."
+echo "🔍 Checking if release '$RELEASE_NAME' is already installed..."
 if ! helm status "$RELEASE_NAME" -n "$NAMESPACE" &> /dev/null; then
-  echo "🚀 Instalando Kubevious..."
+  echo "🚀 Installing Kubevious..."
   helm install "$RELEASE_NAME" kubevious/kubevious -n "$NAMESPACE" --wait
 else
-  echo "✅ Kubevious já está instalado no namespace '$NAMESPACE'."
+  echo "✅ Kubevious is already installed in namespace '$NAMESPACE'."
 fi
 
-echo "🔍 Verificando se o Service '$SERVICE_NAME' existe..."
+echo "🔍 Checking if service '$SERVICE_NAME' exists..."
 if ! kubectl get svc "$SERVICE_NAME" -n "$NAMESPACE" &> /dev/null; then
-  echo "❌ Service '$SERVICE_NAME' não encontrado. Verifique a instalação do Kubevious."
+  echo "❌ Service '$SERVICE_NAME' not found. Please check the Kubevious installation."
   exit 1
 fi
 
-echo "🔧 Alterando tipo do Service para NodePort e sobrescrevendo portas..."
+echo "🔧 Updating service type to NodePort and overriding ports..."
 kubectl patch svc "$SERVICE_NAME" -n "$NAMESPACE" --type='merge' -p "{
   \"spec\": {
     \"type\": \"NodePort\",
@@ -50,5 +50,5 @@ kubectl patch svc "$SERVICE_NAME" -n "$NAMESPACE" --type='merge' -p "{
 }"
 
 echo ""
-echo "✅ Kubevious configurado com sucesso!"
-echo "🔗 Acesse a UI em: http://localhost:$LOCAL_PORT"
+echo "✅ Kubevious successfully configured!"
+echo "🔗 Access the UI at: http://localhost:$LOCAL_PORT"

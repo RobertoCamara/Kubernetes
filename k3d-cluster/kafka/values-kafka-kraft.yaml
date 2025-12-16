@@ -3,9 +3,7 @@ controller:
 
 kraft:
   enabled: true
-  clusterId: "kafka-cluster-id-123"
-
-replicaCount: 1
+  clusterId: "kafka-cluster-id-2025"
 
 listeners:
   client:

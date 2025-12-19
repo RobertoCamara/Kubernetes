@@ -11,11 +11,13 @@ echo "🚀 Iniciando setup completo..."
 
 #./02-install-cert-manager.sh
 
+#./ui/setup-ui.sh
+
 ./kong/install-full-kong.sh
 
 #./kafka/00-install-kafka.sh
 
-#./ui/setup-ui.sh
+
 
 echo ""
 echo "🎉 Setup completo executado com sucesso!"

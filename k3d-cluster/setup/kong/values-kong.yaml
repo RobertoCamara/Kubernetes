@@ -3,32 +3,26 @@ env:
   pg_user: postgres
   pg_password: mypostgresql
   pg_database: kong
-  pg_host: 172.18.0.1
+  pg_host: postgres-external
+  pg_port: 5432
 
 ingressController:
   installCRDs: false
 
-# Kong Proxy (Gateway de entrada para APIs)
 proxy:
-  type: NodePort
+  type: LoadBalancer
   http:
     enabled: true
     servicePort: 80
   tls:
     enabled: false
 
-
-# Admin API (configuração dinâmica)
 admin:
   enabled: true
-  type: NodePort
+  type: LoadBalancer
   http:
     enabled: true
-    servicePort: 8085
-    nodePort: 30085
-  tls:
-    enabled: false
+    servicePort: 30085
 
-# Desabilita o PostgreSQL interno, pois estou usando via Docker
 postgresql:
   enabled: false

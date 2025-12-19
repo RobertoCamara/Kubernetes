@@ -4,14 +4,13 @@ metadata:
   name: konga
   namespace: kong
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: konga
   ports:
     - protocol: TCP
       port: 30081
       targetPort: 1337
-      nodePort: 30081
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -30,7 +29,7 @@ spec:
     spec:
       containers:
         - name: konga
-          image: pantsel/konga:0.14.9
+          image: pantsel/konga:latest
           ports:
             - containerPort: 1337
           env:
@@ -39,7 +38,7 @@ spec:
             - name: DB_ADAPTER
               value: "mongo"
             - name: DB_HOST
-              value: "172.18.0.1"
+              value: "mongo-external"
             - name: DB_PORT
               value: "27017"
             - name: DB_USER

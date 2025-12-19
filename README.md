@@ -5,7 +5,7 @@ Ambiente local completo de desenvolvimento com Kubernetes, preparado para arquit
 > Ambiente testado e validado nas seguintes combinações:
 
 - 🐧 **WSL2 com Debian** → uso preferencial de **K3d**
-- 🐧 **WSL2 com Ubuntu** → uso preferencial de **Kind**
+- 🐧 **WSL2 com Ubuntu** → uso com **K3d** ou **Kind**, porém o ambiente com **Kind** apresentou limitações para uso do Rancher UI por conta dos certificados devido a necessidade do uso de HTTPS
 
 
 ## 📌 Visão Geral
@@ -15,7 +15,7 @@ Este ambiente simula um ecossistema próximo de produção com os seguintes comp
 - **Kafka Broker** no modo KRaft, eliminando a necessidade de ZooKeeper
 - **Kafka Connect** com plugins Debezium para captura de mudanças em bancos MySQL, PostgreSQL e MongoDB
 - **Sink Connectors** configurados para Redis, Elasticsearch e S3
-- **Interfaces de observabilidade**: Kafka UI, Portainer, Kubernetes Dashboard e Kubevious para monitoramento visual e gestão do ambiente
+- **Interfaces de observabilidade**: Kafka UI, Portainer, Rancher UI para monitoramento visual e gestão do ambiente
 - Organização de **Helm charts** e manifests para facilitar deploy e versionamento
 - **Scripts automatizados** para build, instalação e gerenciamento do ambiente
 
@@ -27,7 +27,7 @@ Este repositório contém dois ambientes distintos de cluster Kubernetes local:
 
 | Cluster         | Recomendado para              | Caminho           |
 |-----------------|-------------------------------|-------------------|
-| K3d             | WSL2 com Debian               | [`k3d-cluster`](./k3d-cluster) |
+| K3d             | WSL2 Debian/Ubuntu            | [`k3d-cluster`](./k3d-cluster) |
 | Kind            | WSL2 com Ubuntu               | [`kind-cluster`](./kind-cluster) |
 
 > 💡 Ambas as opções oferecem os mesmos recursos e estrutura de serviços. Escolha com base na compatibilidade do seu sistema operacional.
@@ -105,15 +105,17 @@ Kubernetes/
 
 ## 🌐 Acesse os Serviços
 
-| Serviço                  | URL                                                |
-|--------------------------|----------------------------------------------------|
-| Kafka UI                 | [http://localhost:8080](http://localhost:8080)     |
-| Konga UI                 | [http://localhost:8081](http://localhost:8081)     |
-| Kubevious                | [http://localhost:8082](http://localhost:8082)     |
-| Kafka Connect REST API   | [http://localhost:8083](http://localhost:8083)     |
-| Kong Admin API           | [http://localhost:8085](http://localhost:8085)     |
-| Kafka Connect UI         | [http://localhost:8086](http://localhost:8086)     |
-| Portainer                | [http://localhost:9000](http://localhost:9000)     |
+| Serviço                  | URL                                                          |
+|--------------------------|--------------------------------------------------------------|
+| Kafka UI                 | [http://localhost:8080](http://localhost:8080)               |
+| Konga UI                 | [http://localhost:8081](http://localhost:8081)               |
+| Kubevious                | [http://localhost:8082](http://localhost:8082)               |
+| Kafka Connect REST API   | [http://localhost:8083](http://localhost:8083)               |
+| Kong Admin API           | [http://localhost:8085](http://localhost:8085)               |
+| Kafka Connect UI         | [http://localhost:8086](http://localhost:8086)               |
+| Portainer                | [http://localhost:9000](http://localhost:9000)               |
+| Rancher                  | [https://rancher.localhost/](https://rancher.localhost/)     |
+
 
 ---
 

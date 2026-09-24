@@ -2,6 +2,10 @@ kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
 - role: control-plane
+  extraMounts:
+  - hostPath: /var/lib/kind-data
+    containerPath: /var/lib/kind-data
+    propagation: None
   extraPortMappings:
   - containerPort: 30080
     hostPort: 8080
@@ -23,6 +27,9 @@ nodes:
     protocol: TCP
   - containerPort: 30086
     hostPort: 8086
+    protocol: TCP
+  - containerPort: 30200
+    hostPort: 8200
     protocol: TCP
   - containerPort: 30777
     hostPort: 9000

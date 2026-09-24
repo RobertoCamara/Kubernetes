@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-chmod +x ./*.sh
+find . -name "*.sh" -exec chmod +x {} +
 
 echo "🚀 Starting full setup..."
 
@@ -9,6 +9,7 @@ echo "🚀 Starting full setup..."
 ./setup/01-create-cluster.sh
 ./ui/setup-ui.sh
 ./kong/install-full-kong.sh
+./vault/install-vault.sh
 # ./kafka/install-kafka.sh
 
 echo ""
